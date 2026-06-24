@@ -197,14 +197,6 @@ const updateCourse = async (req, res) => {
 
     if (req.file) {
       req.course.thumbnail = req.file.path;
-      content.materialUrl = req.file.path;
-      content.publicId = req.file.filename;
-      content.materialName = req.file.originalname;
-      content.materialSize = req.file.size;
-
-      if (type !== undefined && type !== "") {
-        content.type = type;
-      }
     }
 
     await req.course.save();

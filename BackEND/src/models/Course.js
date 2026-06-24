@@ -29,11 +29,6 @@ const contentSchema = new mongoose.Schema(
       default: ""
     },
 
-    duration: {
-      type: Number,
-      default: 0
-    },
-
     order: {
       type: Number,
       required: true
