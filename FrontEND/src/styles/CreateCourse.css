@@ -1,5 +1,5 @@
 .create-course-page {
-  min-height: calc(100vh - 72px);
+  min-height: auto;
   padding: 48px 24px;
   background:
     radial-gradient(circle at top left, rgba(86, 124, 141, 0.16), transparent 32%),
