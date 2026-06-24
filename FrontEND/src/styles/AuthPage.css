@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.wrapper {
+  --bg-app: #f8fafc;
+  --bg-card: #ffffff;
+  --primary-color: #6366f1;       /* Azul/Roxo moderno idêntico às imagens limpas */
+  --primary-light: #e0e7ff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-app);
+  font-family: "Inter", sans-serif;
+  padding: 40px 20px;
+}
+
+/* Container do Alinhamento Vertical (Switch no topo, Card no centro) */
+.card-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+}
+
+/* ========================================================
+   SWITCH DE ABAS MODERNO (Entrar / Cadastrar)
+   ======================================================== */
+.switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;
+  height: 44px;
+  background-color: #f1f5f9;
+  border-radius: 99px; 
+  cursor: pointer;
+  padding: 4px;
+  user-select: none;
+}
+
+/* O fundo deslizante (Slider) */
+.slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 104px;
+  height: 36px;
+  background-color: #ffffff;
+  border-radius: 99px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); 
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+/* Os textos fixos "Entrar" e "Cadastrar" */
+.card-side-text {
+  flex: 1;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+/* Estilização baseada no input oculto */
+.toggle {
+  display: none;
+}
+
+/* Quando marcado, desliza o fundo branco para a direita */
+.toggle:checked ~ .switch .slider {
+  transform: translateX(108px);
+}
+
+/* Altera as cores ativas das fontes no switch */
+.toggle:not(:checked) ~ .switch .card-side-text.left {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.toggle:checked ~ .switch .card-side-text.right {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* ========================================================
+   ESTRUTURA DOS CARDS FLIP 3D (ALTURAS DINÂMICAS)
+   ======================================================== */
+.flip-card__inner {
+  width: 100%;
+  max-width: 420px;   
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  
+  /* Transição combinada: gira no eixo Y e ajusta a altura ao mesmo tempo */
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              height 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* Classes dinâmicas injetadas pelo estado do React */
+.height-login {
+  height: 450px; /* Altura menor e compacta perfeita para o Login */
+}
+
+.height-register {
+  height: 645px; /* Altura expandida necessária para os campos de Cadastro */
+}
+
+.toggle:checked ~ .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card__front, 
+.flip-card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Herdam dinamicamente o tamanho atual do pai */
+  padding: 40px 35px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 24px; 
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.flip-card__front {
+  justify-content: flex-start;
+}
+
+.flip-card__back {
+  transform: rotateY(180deg);
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* ========================================================
+   FORMULÁRIOS, INPUTS E BOTÕES INTERNOS
+   ======================================================== */
+.flip-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+  width: 100%;
+}
+
+.flip-card__input {
+  width: 100%;
+  height: 46px; 
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background-color: #ffffff;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  padding: 0 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.flip-card__input::placeholder {
+  color: #a0aec0;
+}
+
+.flip-card__input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Botões Modernos e Sólidos */
+.flip-card__btn {
+  width: 100%;
+  height: 48px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.flip-card__btn:hover {
+  background-color: #4f46e5;
+}
+
+.flip-card__btn:active {
+  transform: scale(0.98);
+}
+
+/* ========================================================
+   SELETORES DE CONTA (AFASTADOS E COM MARGEM)
+   ======================================================== */
+.roles-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 25px 0 15px 0 !important;
+  width: 100% !important;
+  gap: 0 !important; /* Zeramos o gap para usar a margem direta nos filhos */
+}
+
+/* Aplica o espaçamento diretamente em cada opção para separar as bolinhas */
+.roles-row .uiverse-pixel-radio {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important; /* Espaço entre a bolinha azul e o texto "Aluno" */
+  margin: 0 25px !important; /* Cria um espaço de 50px totais entre as opções */
+  font-size: 0.95rem !important;
+  color: var(--text-main) !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
+.roles-row .uiverse-pixel-radio input[type="radio"] {
+  appearance: auto !important;
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: var(--primary-color) !important;
+  margin: 0 !important;
+}

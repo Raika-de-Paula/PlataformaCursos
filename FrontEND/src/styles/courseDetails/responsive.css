@@ -1,0 +1,18 @@
+@media (max-width: 800px) {
+  .course-info-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .course-info-card div {
+    border-right: none;
+  }
+
+  .content-modal {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-comments {
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+  }
+}

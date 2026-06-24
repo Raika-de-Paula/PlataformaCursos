@@ -1,0 +1,183 @@
+.search-page-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+}
+
+.search-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.search-query-text {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.search-query-text span {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.no-results-text {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Grid de busca: Ajustado para 3 colunas idênticas */
+.courses-search-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  width: 100%;
+}
+
+/* Estrutura do Card Clean */
+.search-course-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Área de Imagem relativa para fixar a badge flutuante */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background-color: #f1f5f9;
+}
+
+.search-course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Badge Roxa/Azul sobre a imagem */
+.card-category-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #ffffff;
+  color: #4f46e5;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Corpo do conteúdo do Card */
+.search-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.search-course-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+/* Info do Instrutor */
+.search-course-instructor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 14px;
+}
+
+.search-course-description {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limita em duas linhas de descrição */
+  line-clamp: 2; /* Padrão para compatibilidade */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Alinhamento perfeito do rodapé nas extremidades */
+.search-card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Badges de Status baseadas na paleta da imagem */
+.search-status-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+/* Cores específicas de Status */
+.search-status-badge.in_progress {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+.search-status-badge.available {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.search-status-badge.finished {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Link Ver Curso */
+.search-view-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4f46e5;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.search-view-link:hover {
+  color: #3730a3;
+}
+
+/* Responsividade do Grid */
+@media (max-width: 1024px) {
+  .courses-search-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .courses-search-grid {
+    grid-template-columns: 1fr;
+  }
+  .search-page-container {
+    padding: 20px;
+  }
+}

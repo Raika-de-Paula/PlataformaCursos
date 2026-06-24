@@ -1,0 +1,348 @@
+.edit-course-page {
+  min-height: 100vh;
+  padding: 42px 7%;
+  background: #f6f8fb;
+}
+
+.edit-course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.edit-course-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.8rem;
+}
+
+.edit-course-header p {
+  margin-top: 8px;
+  color: #64748b;
+}
+
+.edit-course-status {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.edit-course-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.45fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.editor-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  padding: 28px;
+}
+
+.editor-card h2 {
+  margin: 0 0 24px;
+  color: #0f172a;
+  font-size: 1.15rem;
+}
+
+.course-form-card label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: 600;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.course-form-card input,
+.course-form-card textarea,
+.course-form-card select,
+.editor-add-section-form input,
+.editor-add-content-form input,
+.editor-add-content-form textarea,
+.editor-content-edit-form input,
+.editor-content-edit-form textarea,
+.editor-inline-edit input {
+  width: 100%;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  outline: none;
+  background: #ffffff;
+}
+
+.course-form-card input:focus,
+.course-form-card textarea:focus,
+.course-form-card select:focus,
+.editor-add-section-form input:focus,
+.editor-add-content-form input:focus,
+.editor-add-content-form textarea:focus,
+.editor-content-edit-form input:focus,
+.editor-content-edit-form textarea:focus,
+.editor-inline-edit input:focus {
+  border-color: #0d4af2;
+  box-shadow: 0 0 0 3px rgba(13, 74, 242, 0.1);
+}
+
+.editor-thumbnail {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.editor-thumbnail-empty {
+  height: 210px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.editor-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.editor-actions {
+  margin-top: 24px;
+}
+
+.editor-save-btn {
+  border: none;
+  background: #0f172a;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.editor-save-btn:hover {
+  background: #020617;
+}
+
+.course-sections-card {
+  min-height: 620px;
+}
+
+.editor-sections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editor-section-item {
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.editor-section-header {
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.editor-section-header strong {
+  display: block;
+  color: #0f172a;
+}
+
+.editor-section-header span {
+  display: block;
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.editor-section-actions,
+.editor-content-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editor-section-actions button,
+.editor-content-actions button,
+.editor-add-section-form button,
+.editor-add-content-form button,
+.editor-inline-edit button {
+  border: 1px solid #dbe3ef;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.editor-section-actions button:hover,
+.editor-content-actions button:hover,
+.editor-add-section-form button:hover,
+.editor-add-content-form button:hover,
+.editor-inline-edit button:hover {
+  background: #f1f5f9;
+}
+
+.editor-section-actions button:disabled,
+.editor-content-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.editor-content-list {
+  padding: 16px;
+}
+
+.editor-empty-text {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.editor-content-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.editor-content-info strong {
+  color: #0f172a;
+}
+
+.editor-content-info p {
+  color: #64748b;
+  margin: 6px 0 10px;
+  font-size: 0.9rem;
+}
+
+.editor-material-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.editor-material-row a {
+  color: #0d4af2;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.editor-material-row button {
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.editor-content-edit-form,
+.editor-add-content-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editor-add-content-form {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.editor-add-content-form h4,
+.editor-add-section-form h3 {
+  margin: 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.editor-add-section-form {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 28px;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.editor-add-section-form button,
+.editor-add-content-form button {
+  width: 100%;
+  background: #f1f5f9;
+}
+
+.editor-inline-edit {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 1100px) {
+  .edit-course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-content-item {
+    flex-direction: column;
+  }
+
+  .editor-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.drag-handle {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 1.35rem;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.editor-content-item.is-dragging,
+.editor-section-item.is-dragging {
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+  border-color: #0d4af2;
+}
+
+.editor-content-description {
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
