@@ -149,4 +149,4 @@ O repositório está estruturado para deploy independente na **Vercel** a partir
 
 ## Autoria
 
-Desenvolvido por **Raika Brasileiro de Paula** — Projeto acadêmico de Desenvolvimento Web Full-Stack.
+Desenvolvido por **Raika Brasileiro de Paula** — Projeto acadêmico de Engenharia de Software I.
