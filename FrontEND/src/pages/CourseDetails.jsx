@@ -41,6 +41,12 @@ export default function CourseDetails() {
   }, [courseId]);
 
   useEffect(() => {
+    if (course?.title) {
+      document.title = `${course.title} - Neadro`;
+    }
+  }, [course]);
+
+  useEffect(() => {
     if (!targetContentId || !course?.sections) return;
 
     for (const section of course.sections) {

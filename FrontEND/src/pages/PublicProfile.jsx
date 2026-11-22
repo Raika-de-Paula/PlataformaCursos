@@ -33,6 +33,12 @@ export default function PublicProfile() {
     fetchProfile();
   }, [userId, isInstructor]);
 
+  useEffect(() => {
+    if (profile?.name) {
+      document.title = `${profile.name} - Neadro`;
+    }
+  }, [profile]);
+
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
