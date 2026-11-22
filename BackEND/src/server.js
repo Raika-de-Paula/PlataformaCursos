@@ -19,10 +19,7 @@ const notificationRoutes = require("./routes/notificationRoutes");
 
 const app = express();
 
-// Conecta ao MongoDB
-connectDB();
-
-// Middlewares
+// 1. Middlewares de CORS e JSON primeiro (para não bloquear preflight OPTIONS)
 app.use(
   cors({
     origin: [
@@ -35,11 +32,26 @@ app.use(
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-// Rota de teste
+// 2. Rota de teste rápida (não depende do banco)
 app.get("/", (req, res) => {
   res.json({
     message: "API rodando!"
   });
+});
+
+// 3. Garante conexão com o MongoDB antes das rotas que acessam o banco
+app.use(async (req, res, next) => {
+  if (req.method === "OPTIONS") return next();
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("Falha na conexão com MongoDB:", error.message);
+    res.status(500).json({
+      message: "Erro ao conectar ao banco de dados",
+      error: error.message
+    });
+  }
 });
 
 app.get("/profile", authMiddleware, (req, res) => {
@@ -48,7 +60,7 @@ app.get("/profile", authMiddleware, (req, res) => {
   });
 });
 
-// Rotas
+// 4. Rotas da aplicação
 app.use("/auth", authRoutes);
 app.use("/students", studentRoutes);
 app.use("/instructors", instructorRoutes);
