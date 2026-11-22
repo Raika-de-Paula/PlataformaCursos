@@ -1,0 +1,55 @@
+.material-card,
+.modal-material-card {
+  width: 260px;
+  max-width: 260px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.material-card:hover,
+.modal-material-card:hover {
+  background: #f8fafc;
+}
+
+.material-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.material-card strong,
+.modal-material-card strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #0f172a;
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.material-card span,
+.modal-material-card span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.modal-material-card {
+  margin-top: auto;
+}

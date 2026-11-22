@@ -1,0 +1,93 @@
+/* src/index.css */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200..800&display=swap");
+
+:root {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Bricolage Grotesque", sans-serif !important;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+}
+
+/* ========================================================
+   MODO NOTURNO MANUAL (CONTROLADO PELO ÍCONE NA NAVBAR)
+   ======================================================== */
+html.dark {
+  filter: invert(0.92) hue-rotate(180deg);
+  background-color: #0b0f19;
+}
+
+/* Reverte a inversão em mídias e containers visuais */
+html.dark img,
+html.dark video,
+html.dark picture,
+html.dark canvas,
+html.dark iframe,
+html.dark .navbar-avatar,
+html.dark .navbar-logo-badge,
+html.dark .editor-thumbnail,
+html.dark .course-header-banner,
+html.dark .course-detail-banner,
+html.dark .course-hero,
+html.dark .course-cover,
+html.dark [style*="background-image"],
+html.dark .flip-card__btn {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Evita dupla inversão quando há <img> dentro de container já revertido */
+html.dark .navbar-avatar img,
+html.dark .course-header-banner img,
+html.dark .course-detail-banner img,
+html.dark .course-hero img,
+html.dark .course-cover img {
+  filter: none;
+}
+
+/* Na tela de login/cadastro (onde .wrapper está presente), sempre acompanha o sistema */
+@media (prefers-color-scheme: dark) {
+  html:has(.wrapper) {
+    filter: invert(0.92) hue-rotate(180deg);
+    background-color: #0b0f19;
+  }
+
+  html:has(.wrapper) .flip-card__btn {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html:has(.wrapper) {
+    filter: none;
+    background-color: #f8fafc;
+  }
+
+  html:has(.wrapper) .flip-card__btn {
+    filter: none;
+  }
+}

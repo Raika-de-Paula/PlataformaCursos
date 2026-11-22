@@ -1,0 +1,36 @@
+.course-hero {
+  max-width: 860px;
+  min-height: 230px;
+  margin: 30px auto 0;
+  padding: 40px 32px;
+  border-radius: 18px;
+  color: white;
+  background: linear-gradient(135deg, #070b18, #111827);
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+}
+
+.course-hero p {
+  max-width: 720px;
+  color: #d1d5db;
+  line-height: 1.6;
+}
+
+.course-status {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.course-status.in_progress {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.course-status.finished {
+  background: #dcfce7;
+  color: #15803d;
+}

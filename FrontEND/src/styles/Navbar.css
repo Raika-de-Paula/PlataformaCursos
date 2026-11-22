@@ -1,0 +1,619 @@
+/* Container Principal da Barra de Navegação */
+.navbar {
+  width: 100%;
+  height: 70px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.navbar-center {
+  flex: 2;
+  justify-content: center;
+  min-width: 0;
+}
+
+.navbar-right {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ========================================================
+   LOGO
+   ======================================================== */
+.navbar-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #0d4af2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ========================================================
+   BARRA DE PESQUISA
+   ======================================================== */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-search {
+  width: 100%;
+  padding: 10px 42px 10px 16px;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  outline: none;
+  color: #334155;
+  background-color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.navbar-search::placeholder {
+  color: #94a3b8;
+}
+
+.navbar-search:focus {
+  border-color: #0d4af2;
+  box-shadow: 0 0 0 3px rgba(13, 74, 242, 0.1);
+}
+
+.search-btn-icon {
+  position: absolute;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.search-btn-icon:hover {
+  color: #0d4af2;
+}
+
+.search-close-btn {
+  display: none;
+  position: absolute;
+  right: 40px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.search-close-btn:hover {
+  color: #ef4444;
+}
+
+/* ========================================================
+   BOTÕES DA NAVBAR
+   ======================================================== */
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* ========================================================
+   PERFIL E NOTIFICAÇÕES
+   ======================================================== */
+.navbar-profile {
+  position: relative;
+}
+
+.navbar-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #00b074;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.navbar-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.navbar-menu {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 180px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navbar-menu button {
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.navbar-menu button:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.notification-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  color: #0f172a;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  padding: 0;
+}
+
+.notification-btn:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #ffffff;
+}
+
+.notification-wrapper {
+  position: relative;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 330px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+  z-index: 300;
+  overflow: hidden;
+}
+
+.notifications-dropdown-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notifications-dropdown-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.notifications-dropdown-header button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.notification-dropdown-item {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.notification-dropdown-item.unread {
+  background: #f8fbff;
+}
+
+.notification-dot {
+  width: 7px;
+  height: 7px;
+  background: #2563eb;
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+.notification-dropdown-content {
+  flex: 1;
+}
+
+.notification-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.notification-title-row strong {
+  font-size: 0.82rem;
+  color: #0f172a;
+}
+
+.notification-title-row small {
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.notification-dropdown-content p {
+  margin: 6px 0 10px;
+  color: #475569;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.notification-actions a,
+.notification-actions button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.notification-actions button {
+  color: #94a3b8;
+}
+
+.notifications-view-all {
+  display: block;
+  padding: 14px;
+  text-align: center;
+  border-top: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.notification-empty {
+  padding: 18px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* ========================================================
+   1º PASSO (<= 760px): Botão "Meus Cursos" / "Criar curso" 
+   vira quadrado só com o ícone (dando mais espaço para a busca)
+   ======================================================== */
+@media (max-width: 650px) {
+  .navbar {
+    padding: 0 20px;
+    gap: 14px;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    flex: initial;
+    flex-shrink: 0;
+  }
+
+  .navbar-center {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .action-icon-btn {
+    padding: 0;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .action-icon-btn .nav-btn-text {
+    display: none;
+  }
+}
+
+/* ========================================================
+   2º PASSO Barra de pesquisa vira apenas a lupa
+   ======================================================== */
+@media (max-width: 450px) {
+  .navbar {
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .navbar-center {
+    flex: initial;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .search-container:not(.expanded) {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .search-container:not(.expanded):hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+  }
+
+  .search-container:not(.expanded) .navbar-search {
+    display: none;
+  }
+
+  .search-container:not(.expanded) .search-btn-icon {
+    position: static;
+    width: 100%;
+    height: 100%;
+    color: #0f172a;
+  }
+
+  /* Barra de pesquisa expandida ao clicar na lupa */
+  .navbar.search-active .navbar-right {
+    display: none;
+  }
+
+  .navbar.search-active .navbar-center {
+    flex: 1;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .search-container.expanded {
+    max-width: 100%;
+  }
+
+  .search-container.expanded .navbar-search {
+    display: block;
+    padding-right: 68px;
+  }
+
+  .search-container.expanded .search-close-btn {
+    display: flex;
+  }
+}
+
+.notification-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  z-index: 1000;
+}
+
+/* Ponte invisível entre o sininho e o dropdown para o mouse não perder o hover */
+.notification-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  height: 14px;
+}
+
+.notification-wrapper:hover .notifications-dropdown,
+.notification-wrapper:focus-within .notifications-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ========================================================
+   3º PASSO (<= 355px): Texto "Neadro" some e fica apenas 
+   o quadrado azul N
+   ======================================================== */
+@media (max-width: 355px) {
+  .navbar {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .navbar-right {
+    gap: 8px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .logo-icon,
+  .notification-btn,
+  .navbar-avatar {
+    flex-shrink: 0;
+  }
+
+  .notifications-dropdown {
+    width: 280px;
+    right: -46px;
+  }
+}
+
+/* Desktop e telas médias: evita estourar a borda esquerda */
+.notifications-dropdown {
+  width: min(360px, calc(100vw - 24px));
+  max-height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+}
+
+.notifications-dropdown-list {
+  overflow-y: auto;
+  max-height: 360px;
+}
+
+/* Telas pequenas / janela estreita: centraliza o dropdown na largura da viewport */
+@media (max-width: 600px) {
+  .notification-wrapper {
+    position: static;
+  }
+
+  .notifications-dropdown {
+    position: fixed;
+    top: 72px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
+
+  .notification-wrapper::before {
+    left: 0;
+    right: 0;
+    width: 100vw;
+  }
+}
