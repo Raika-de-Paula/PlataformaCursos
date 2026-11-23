@@ -1,0 +1,221 @@
+/* src/styles/navbar/notifications.css
+   Sino, contador e dropdown de notificações (abre no hover) */
+
+.notification-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Ponte invisível entre o sininho e o dropdown para o mouse não perder o hover */
+.notification-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  height: 14px;
+}
+
+.notification-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  color: #0f172a;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  padding: 0;
+}
+
+.notification-btn:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #ffffff;
+}
+
+/* Dropdown (escondido por padrão, aparece no hover/foco) */
+.notifications-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(360px, calc(100vw - 24px));
+  max-height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+  overflow: hidden;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.notification-wrapper:hover .notifications-dropdown,
+.notification-wrapper:focus-within .notifications-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.notifications-dropdown-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notifications-dropdown-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.notifications-dropdown-header button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.notifications-dropdown-list {
+  overflow-y: auto;
+  max-height: 360px;
+}
+
+/* Itens */
+.notification-dropdown-item {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.notification-dropdown-item.unread {
+  background: #f8fbff;
+}
+
+.notification-dot {
+  width: 7px;
+  height: 7px;
+  background: #2563eb;
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+.notification-dropdown-content {
+  flex: 1;
+}
+
+.notification-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.notification-title-row strong {
+  font-size: 0.82rem;
+  color: #0f172a;
+}
+
+.notification-title-row small {
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.notification-dropdown-content p {
+  margin: 6px 0 10px;
+  color: #475569;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.notification-actions a,
+.notification-actions button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.notification-actions button {
+  color: #94a3b8;
+}
+
+.notifications-view-all {
+  display: block;
+  padding: 14px;
+  text-align: center;
+  border-top: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.notification-empty {
+  padding: 18px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* Telas pequenas: dropdown ocupa a largura da janela */
+@media (max-width: 600px) {
+  .notification-wrapper {
+    position: static;
+  }
+
+  .notifications-dropdown {
+    position: fixed;
+    top: 72px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
+
+  .notification-wrapper::before {
+    left: 0;
+    right: 0;
+    width: 100vw;
+  }
+}

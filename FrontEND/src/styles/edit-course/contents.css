@@ -1,0 +1,178 @@
+/* src/styles/edit-course/contents.css
+   Conteúdos dentro das sessões: lista, formulários e chips de materiais */
+
+/* Lista e itens (adaptativo ao tamanho do título) */
+.editor-content-list {
+  width: 100%;
+  padding: 0 16px 4px;
+}
+
+.editor-content-item {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.editor-content-item.is-dragging {
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+  border-color: #0d4af2;
+}
+
+.editor-content-item .drag-handle {
+  flex-shrink: 0;
+}
+
+.editor-content-item .editor-content-info {
+  flex: 1 1 150px;
+  min-width: 0;
+  text-align: center;
+}
+
+.editor-content-item .editor-content-info strong {
+  display: block;
+  color: #0f172a;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.editor-content-item .editor-content-info p {
+  color: #64748b;
+  margin: 6px 0 10px;
+  font-size: 0.9rem;
+}
+
+.editor-content-item .editor-content-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 1 auto;
+  margin-inline: auto;
+}
+
+/* Quando o formulário de edição abre, ocupa 100% da largura */
+.editor-content-item:has(.editor-content-edit-form) {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Formulários de editar e adicionar conteúdo */
+.editor-content-edit-form,
+.editor-add-content-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editor-add-content-form {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.editor-add-content-form h4 {
+  margin: 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.editor-add-content-form button {
+  width: 100%;
+  background: #f1f5f9;
+}
+
+/* Materiais (linha simples) */
+.editor-material-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.editor-material-row a {
+  color: #0d4af2;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.editor-material-row button {
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* Chips de materiais lado a lado (adicionar e editar) */
+.editor-material-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.editor-material-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  max-width: 100%;
+}
+
+.editor-material-chip-title {
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.editor-material-chip-title:hover {
+  text-decoration: underline;
+}
+
+.editor-material-chip-remove {
+  width: auto !important;
+  height: auto !important;
+  min-width: unset !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: #ef4444 !important;
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor-material-chip-remove:hover {
+  color: #dc2626 !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-radius: 4px;
+}
+
+html.dark .editor-material-chip {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}

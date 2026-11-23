@@ -260,6 +260,21 @@
   color: #15803d;
 }
 
+.public-profile-banner {
+  position: relative;
+  z-index: 1;
+}
+
+.public-profile-container {
+  position: relative;
+  z-index: 2;
+}
+
+.public-profile-avatar {
+  position: relative;
+  z-index: 3;
+}
+
 @media (max-width: 850px) {
   .public-profile-container {
     grid-template-columns: 1fr;
@@ -269,3 +284,4 @@
     grid-template-columns: 1fr;
   }
 }
+

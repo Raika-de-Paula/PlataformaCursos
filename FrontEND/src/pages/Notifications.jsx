@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
+import BackButton from "../components/BackButton";
 import "../styles/Notifications.css";
 import { MdOutlineInsertComment } from "react-icons/md";
 
@@ -102,6 +103,8 @@ export default function Notifications() {
 
   return (
     <main className="notifications-page">
+      <BackButton />
+
       <header className="notifications-header">
         <div>
           <h1>Notificações</h1>
@@ -113,9 +116,7 @@ export default function Notifications() {
             Marcar todas como lidas
           </button>
 
-          <Link to="/settings">
-            Configurações
-          </Link>
+          <Link to="/settings">Configurações</Link>
         </div>
       </header>
 
@@ -142,13 +143,6 @@ export default function Notifications() {
         </button>
 
         <button
-          className={filter === "sales" ? "active" : ""}
-          onClick={() => setFilter("sales")}
-        >
-          Vendas
-        </button>
-
-        <button
           className={filter === "system" ? "active" : ""}
           onClick={() => setFilter("system")}
         >
@@ -158,9 +152,7 @@ export default function Notifications() {
 
       <section className="notifications-list-card">
         {filteredNotifications.length === 0 && (
-          <p className="notifications-empty">
-            Nenhuma notificação encontrada.
-          </p>
+          <p className="notifications-empty">Nenhuma notificação encontrada.</p>
         )}
 
         {filteredNotifications.map((notification) => (
@@ -170,8 +162,14 @@ export default function Notifications() {
               !notification.isRead ? "unread" : ""
             }`}
           >
-            <div className={`notification-page-icon ${getNotificationCategory(notification)}`}>
-              {getNotificationCategory(notification) === "comments" && <MdOutlineInsertComment />}
+            <div
+              className={`notification-page-icon ${getNotificationCategory(
+                notification
+              )}`}
+            >
+              {getNotificationCategory(notification) === "comments" && (
+                <MdOutlineInsertComment />
+              )}
             </div>
 
             <div className="notification-page-content">

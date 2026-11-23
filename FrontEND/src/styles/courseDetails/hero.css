@@ -1,5 +1,6 @@
 .course-hero {
-  max-width: 860px;
+  width: calc(100%-40px);
+  max-width: 820px;
   min-height: 230px;
   margin: 30px auto 0;
   padding: 40px 32px;

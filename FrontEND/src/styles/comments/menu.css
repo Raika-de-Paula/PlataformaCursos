@@ -1,0 +1,49 @@
+/* src/styles/comments/menu.css
+   Menu de três pontinhos (excluir) */
+
+.comment-menu-wrapper {
+  position: relative;
+}
+
+.comment-menu-btn {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.comment-menu-btn:hover {
+  color: #0f172a;
+}
+
+.comment-menu {
+  position: absolute;
+  right: 0;
+  top: 22px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  min-width: 110px;
+  padding: 6px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+}
+
+.comment-menu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.comment-menu button:hover {
+  background: #fef2f2;
+}

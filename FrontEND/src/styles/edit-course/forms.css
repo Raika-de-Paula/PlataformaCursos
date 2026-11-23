@@ -1,0 +1,36 @@
+/* src/styles/edit-course/forms.css
+   Estilo compartilhado de campos (input, textarea, select) */
+
+.course-form-card input,
+.course-form-card textarea,
+.course-form-card select,
+.editor-add-section-form input,
+.editor-add-content-form input,
+.editor-add-content-form textarea,
+.editor-content-edit-form input,
+.editor-content-edit-form textarea,
+.editor-inline-edit input {
+  width: 100%;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  outline: none;
+  background: #ffffff;
+  min-width: 0;
+}
+
+.course-form-card input:focus,
+.course-form-card textarea:focus,
+.course-form-card select:focus,
+.editor-add-section-form input:focus,
+.editor-add-content-form input:focus,
+.editor-add-content-form textarea:focus,
+.editor-content-edit-form input:focus,
+.editor-content-edit-form textarea:focus,
+.editor-inline-edit input:focus {
+  border-color: #0d4af2;
+  box-shadow: 0 0 0 3px rgba(13, 74, 242, 0.1);
+}

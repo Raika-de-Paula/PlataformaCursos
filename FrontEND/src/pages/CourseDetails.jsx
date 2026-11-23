@@ -5,12 +5,13 @@ import { useParams, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import "../styles/CourseDetails.css";
 
+import BackButton from "../components/BackButton";
 import CourseHero from "../components/course/CourseHero";
 import CourseInfoCard from "../components/course/CourseInfoCard";
 import CourseSectionCard from "../components/course/CourseSectionCard";
 import CourseContentModal from "../components/course/CourseContentModal";
 import ConfirmModal from "../components/ConfirmModal";
-import { AuthContext} from "../contexts/authContext";
+import { AuthContext } from "../contexts/authContext";
 
 export default function CourseDetails() {
   const { courseId } = useParams();
@@ -72,7 +73,10 @@ export default function CourseDetails() {
   const handleCloseOrSelectContent = (content) => {
     setSelectedContent(content);
 
-    if (!content && (searchParams.has("contentId") || searchParams.has("commentId"))) {
+    if (
+      !content &&
+      (searchParams.has("contentId") || searchParams.has("commentId"))
+    ) {
       setSearchParams({}, { replace: true });
     }
   };
@@ -118,6 +122,11 @@ export default function CourseDetails() {
 
   return (
     <div className="course-details-page">
+      <div
+      >
+        <BackButton/>
+      </div>
+
       <CourseHero course={course} />
 
       <main className="course-main">

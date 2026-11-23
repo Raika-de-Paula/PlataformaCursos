@@ -6,6 +6,22 @@ const Enrollment = require("../models/Enrollment");
 const Notification = require("../models/Notification");
 const User = require("../models/User");
 
+const detectMaterialType = (mimetype = "") => {
+  if (mimetype.startsWith("video/")) return "video";
+  if (mimetype.startsWith("image/")) return "image";
+  if (mimetype === "application/pdf") return "pdf";
+  if (mimetype.includes("zip") || mimetype.includes("compressed")) return "zip";
+  if (
+    mimetype.includes("word") ||
+    mimetype.includes("document") ||
+    mimetype.includes("presentation") ||
+    mimetype.includes("spreadsheet")
+  ) {
+    return "document";
+  }
+  return "link";
+};
+
 const createCourse = async (req, res) => {
   try {
     const { title, description, category } = req.body;
@@ -162,15 +178,27 @@ const createContent = async (req, res) => {
       });
     }
 
+    const uploadedFiles = req.files || [];
+    const materials = uploadedFiles.map((file) => ({
+      url: file.path,
+      publicId: file.filename || "",
+      name: file.originalname || "",
+      size: file.size || 0,
+      type: detectMaterialType(file.mimetype)
+    }));
+
+    const firstMaterial = materials[0];
+
     section.contents.push({
       title,
       description,
-      type: type || "text",
+      type: firstMaterial ? firstMaterial.type : type || "text",
       order,
-      materialUrl: req.file?.path || "",
-      publicId: req.file?.filename || "",
-      materialName: req.file?.originalname || "",
-      materialSize: req.file?.size || 0
+      materials,
+      materialUrl: firstMaterial?.url || "",
+      publicId: firstMaterial?.publicId || "",
+      materialName: firstMaterial?.name || "",
+      materialSize: firstMaterial?.size || 0
     });
 
     await course.save();
@@ -353,7 +381,7 @@ const deleteSection = async (req, res) => {
 const updateContent = async (req, res) => {
   try {
     const { sectionId, contentId } = req.params;
-    const { title, description, type, order } = req.body;
+    const { title, description, order } = req.body;
 
     const section = req.course.sections.id(sectionId);
 
@@ -375,17 +403,34 @@ const updateContent = async (req, res) => {
     if (description !== undefined) content.description = description;
     if (order !== undefined) content.order = order;
 
-    if (type !== undefined && type !== "" && type !== "text") {
-      content.type = type;
+    if ((!content.materials || content.materials.length === 0) && content.materialUrl) {
+      content.materials.push({
+        url: content.materialUrl,
+        publicId: content.publicId || "",
+        name: content.materialName || "Material",
+        size: content.materialSize || 0,
+        type: content.type && content.type !== "text" ? content.type : "link"
+      });
     }
 
-    if (req.file) {
-      content.materialUrl = req.file.path;
-      content.publicId = req.file.filename;
-      
-      if (type !== undefined && type !== "") {
-        content.type = type;
-      }
+    const uploadedFiles = req.files || [];
+    if (uploadedFiles.length > 0) {
+      uploadedFiles.forEach((file) => {
+        content.materials.push({
+          url: file.path,
+          publicId: file.filename || "",
+          name: file.originalname || "",
+          size: file.size || 0,
+          type: detectMaterialType(file.mimetype)
+        });
+      });
+
+      const first = content.materials[0];
+      content.type = first.type;
+      content.materialUrl = first.url;
+      content.publicId = first.publicId;
+      content.materialName = first.name;
+      content.materialSize = first.size;
     }
 
     await req.course.save();
@@ -432,7 +477,7 @@ const deleteContent = async (req, res) => {
 
 const removeContentMaterial = async (req, res) => {
   try {
-    const { sectionId, contentId } = req.params;
+    const { sectionId, contentId, materialId } = req.params;
     const section = req.course.sections.id(sectionId);
 
     if (!section) {
@@ -449,11 +494,32 @@ const removeContentMaterial = async (req, res) => {
       });
     }
 
-    content.materialUrl = "";
-    content.publicId = "";
-    content.type = "text";
-    content.materialName = "";
-    content.materialSize = 0;
+    if (materialId === "legacy") {
+      content.materialUrl = "";
+      content.publicId = "";
+      content.type = "text";
+      content.materialName = "";
+      content.materialSize = 0;
+    } else {
+      content.materials = content.materials.filter(
+        (mat) => mat._id.toString() !== materialId
+      );
+
+      if (content.materials.length > 0) {
+        const first = content.materials[0];
+        content.materialUrl = first.url;
+        content.publicId = first.publicId;
+        content.materialName = first.name;
+        content.materialSize = first.size;
+        content.type = first.type;
+      } else {
+        content.materialUrl = "";
+        content.publicId = "";
+        content.materialName = "";
+        content.materialSize = 0;
+        content.type = "text";
+      }
+    }
 
     await req.course.save();
 

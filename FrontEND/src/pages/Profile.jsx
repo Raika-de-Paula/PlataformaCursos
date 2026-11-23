@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import api from "../services/api";
 import { AuthContext } from "../contexts/authContext";
 import ProfileForm from "../components/ProfileEditor/ProfileForm";
+import BackButton from "../components/BackButton";
 import "../styles/Profile.css";
 
 const formatPhone = (value) => {
@@ -213,20 +214,27 @@ export default function Profile() {
   }
 
   return (
-    <ProfileForm
-      isInstructor={isInstructor}
-      profile={profile}
-      form={form}
-      photoPreview={photoPreview}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      handlePhotoChange={handlePhotoChange}
-      handleArrayChange={handleArrayChange}
-      addArrayItem={addArrayItem}
-      removeArrayItem={removeArrayItem}
-      handleLinkChange={handleLinkChange}
-      addLink={addLink}
-      removeLink={removeLink}
-    />
+    <div>
+      <div
+      >
+        <BackButton />
+      </div>
+
+      <ProfileForm
+        isInstructor={isInstructor}
+        profile={profile}
+        form={form}
+        photoPreview={photoPreview}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        handlePhotoChange={handlePhotoChange}
+        handleArrayChange={handleArrayChange}
+        addArrayItem={addArrayItem}
+        removeArrayItem={removeArrayItem}
+        handleLinkChange={handleLinkChange}
+        addLink={addLink}
+        removeLink={removeLink}
+      />
+    </div>
   );
 }

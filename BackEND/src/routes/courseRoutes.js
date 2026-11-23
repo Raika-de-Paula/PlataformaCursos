@@ -68,7 +68,7 @@ router.post(
   authMiddleware,
   roleMiddleware("instructor"),
   courseOwnerMiddleware,
-  upload.single("material"),
+  upload.array("materials", 10),
   createContent
 );
 
@@ -118,7 +118,7 @@ router.patch(
   authMiddleware,
   roleMiddleware("instructor"),
   courseOwnerMiddleware,
-  upload.single("material"),
+  upload.array("materials", 10),
   updateContent
 );
 
@@ -131,7 +131,7 @@ router.delete(
 );
 
 router.delete(
-  "/:courseId/sections/:sectionId/contents/:contentId/material",
+  "/:courseId/sections/:sectionId/contents/:contentId/materials/:materialId",
   authMiddleware,
   roleMiddleware("instructor"),
   courseOwnerMiddleware,

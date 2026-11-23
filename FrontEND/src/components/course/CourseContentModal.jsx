@@ -1,4 +1,4 @@
-//src/components/course/CourseContentModal.jsx
+// src/components/course/CourseContentModal.jsx
 
 import Comments from "../Comments";
 import { useEffect } from "react";
@@ -40,6 +40,23 @@ export default function CourseContentModal({
     });
   };
 
+  const materialsList =
+    selectedContent.materials && selectedContent.materials.length > 0
+      ? selectedContent.materials
+      : selectedContent.materialUrl
+      ? [
+          {
+            _id: "legacy",
+            url: content.materialUrl,
+            name:
+              selectedContent.materialName ||
+              getMaterialName(selectedContent.materialUrl),
+            size: selectedContent.materialSize,
+            type: selectedContent.type
+          }
+        ]
+      : [];
+
   return (
     <div className="modal-overlay" onClick={() => setSelectedContent(null)}>
       <div className="content-modal" onClick={(e) => e.stopPropagation()}>
@@ -64,30 +81,79 @@ export default function CourseContentModal({
             {selectedContent.description || "Sem descrição."}
           </p>
 
-          {selectedContent.materialUrl && (
-            <a
-              className="modal-material-card"
-              href={selectedContent.materialUrl}
-              target="_blank"
-              rel="noreferrer"
+          {materialsList.length > 0 && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: "10px",
+                width: "100%"
+              }}
             >
-              <div className={`material-icon ${selectedContent.type}`}>
-                {getContentIcon(selectedContent.type)}
-              </div>
+              {materialsList.map((mat, idx) => {
+                const displayName = mat.name || getMaterialName(mat.url);
+                return (
+                  <a
+                    key={mat._id || idx}
+                    className="modal-material-card"
+                    href={mat.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={displayName}
+                    style={{
+                      marginTop: 0,
+                      padding: "10px 12px",
+                      maxWidth: "190px",
+                      minWidth: "145px",
+                      width: "auto",
+                      flex: "1 1 160px"
+                    }}
+                  >
+                    <div
+                      className={`material-icon ${
+                        mat.type || selectedContent.type
+                      }`}
+                      style={{ width: "32px", height: "32px", flexShrink: 0 }}
+                    >
+                      {getContentIcon(mat.type || selectedContent.type)}
+                    </div>
 
-              <div>
-                <strong>
-                  {selectedContent.materialName ||
-                    getMaterialName(selectedContent.materialUrl)}
-                </strong>
+                    <div style={{ minWidth: 0, overflow: "hidden" }}>
+                      <strong
+                        style={{
+                          display: "block",
+                          fontSize: "0.85rem",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        {displayName}
+                      </strong>
 
-                <span>
-                  {getMaterialFormat(selectedContent)}
-                  {selectedContent.materialSize &&
-                    ` · ${formatFileSize(selectedContent.materialSize)}`}
-                </span>
-              </div>
-            </a>
+                      <span
+                        style={{
+                          display: "block",
+                          fontSize: "0.75rem",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        {getMaterialFormat({
+                          ...selectedContent,
+                          ...mat,
+                          materialUrl: mat.url
+                        })}
+                        {mat.size ? ` · ${formatFileSize(mat.size)}` : ""}
+                      </span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
           )}
         </div>
 

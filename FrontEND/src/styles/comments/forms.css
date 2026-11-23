@@ -1,0 +1,61 @@
+/* src/styles/comments/forms.css
+   Formulário de novo comentário e de resposta */
+
+.comment-form {
+  flex-shrink: 0;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+  margin-top: 18px;
+}
+
+.comment-form textarea,
+.reply-form textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: none;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.comment-form textarea:focus,
+.reply-form textarea:focus {
+  border-color: #0d4af2;
+  box-shadow: 0 0 0 3px rgba(13, 74, 242, 0.1);
+}
+
+.comment-form button,
+.reply-form-actions button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border: 1px solid #dbe3ef;
+  background: #ffffff;
+  border-radius: 8px;
+  color: #0f172a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comment-form button:hover,
+.reply-form-actions button:hover {
+  background: #f8fafc;
+}
+
+.reply-form {
+  margin-top: 12px;
+}
+
+.reply-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.reply-form-actions button:last-child {
+  background: #0d4af2;
+  color: #ffffff;
+  border-color: #0d4af2;
+}

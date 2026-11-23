@@ -1,0 +1,25 @@
+/* src/styles/comments/layout.css
+   Caixa de comentários, lista rolável e estado vazio */
+
+.comments-box {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.comments-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.empty-comments {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.comment-thread {
+  margin-bottom: 22px;
+}

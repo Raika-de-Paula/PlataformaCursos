@@ -1,6 +1,30 @@
 // src/models/Course.js
 const mongoose = require("mongoose");
 
+const materialSchema = new mongoose.Schema({
+  url: {
+    type: String,
+    required: true
+  },
+  publicId: {
+    type: String,
+    default: ""
+  },
+  name: {
+    type: String,
+    default: ""
+  },
+  size: {
+    type: Number,
+    default: 0
+  },
+  type: {
+    type: String,
+    enum: ["video", "pdf", "image", "link", "document", "zip", "text"],
+    default: "link"
+  }
+});
+
 const contentSchema = new mongoose.Schema(
   {
     title: {
@@ -19,6 +43,12 @@ const contentSchema = new mongoose.Schema(
       required: true
     },
 
+    materials: {
+      type: [materialSchema],
+      default: []
+    },
+
+    // Campos legados mantidos para compatibilidade com conteúdos antigos
     materialUrl: {
       type: String,
       default: ""
@@ -93,10 +123,7 @@ const courseSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: [
-        "in_progress",
-        "finished"
-      ],
+      enum: ["in_progress", "finished"],
       default: "in_progress"
     },
 

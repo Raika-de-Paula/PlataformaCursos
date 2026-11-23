@@ -1,0 +1,43 @@
+/* src/styles/navbar/layout.css
+   Estrutura da barra: esquerda, centro e direita */
+
+.navbar {
+  width: 100%;
+  height: 70px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.navbar-center {
+  flex: 2;
+  justify-content: center;
+  min-width: 0;
+}
+
+.navbar-right {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}

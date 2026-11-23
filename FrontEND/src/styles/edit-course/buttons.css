@@ -1,0 +1,108 @@
+/* src/styles/edit-course/buttons.css
+   Botões compartilhados, botões de ícone e alça de arrastar */
+
+.editor-section-actions button,
+.editor-content-actions button,
+.editor-add-section-form button,
+.editor-add-content-form button,
+.editor-inline-edit button {
+  border: 1px solid #dbe3ef;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.editor-section-actions button:hover,
+.editor-content-actions button:hover,
+.editor-add-section-form button:hover,
+.editor-add-content-form button:hover,
+.editor-inline-edit button:hover {
+  background: #f1f5f9;
+}
+
+.editor-section-actions button:disabled,
+.editor-content-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.editor-expand-btn,
+.editor-icon-btn {
+  width: 34px;
+  height: 34px;
+  padding: 0 !important;
+  border-radius: 8px;
+  border: 1px solid #dbe3ef;
+  background: #ffffff;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.editor-expand-btn svg,
+.editor-icon-btn svg {
+  width: 17px !important;
+  height: 17px !important;
+  min-width: 17px;
+  min-height: 17px;
+  display: block;
+}
+
+.editor-expand-btn:hover,
+.editor-icon-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.editor-icon-btn.danger:hover {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+/* Alça de arrastar */
+.drag-handle {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 1.35rem;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.editor-section-actions .drag-handle,
+.editor-content-actions .drag-handle {
+  width: 34px;
+  height: 34px;
+  padding: 0 !important;
+  border-radius: 8px;
+  border: 1px solid #dbe3ef;
+  background: #ffffff;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.editor-section-actions .drag-handle:hover,
+.editor-content-actions .drag-handle:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}

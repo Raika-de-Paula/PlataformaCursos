@@ -14,7 +14,8 @@ export default function ContentItem({
   startEditContent,
   saveContentEdit,
   setEditingContentId,
-  deleteContent
+  deleteContent,
+  removeContentMaterial
 }) {
   const {
     attributes,
@@ -30,6 +31,20 @@ export default function ContentItem({
     transition,
     opacity: isDragging ? 0.6 : 1
   };
+
+  // Unifica materiais novos (array) e legado (materialUrl único)
+  const existingMaterials =
+    content.materials && content.materials.length > 0
+      ? content.materials
+      : content.materialUrl
+      ? [
+          {
+            _id: "legacy",
+            url: content.materialUrl,
+            name: content.materialName || "Material anexado"
+          }
+        ]
+      : [];
 
   return (
     <div
@@ -62,23 +77,82 @@ export default function ContentItem({
             rows="3"
           />
 
-          {content.materialUrl && (
-            <div className="editor-material-row">
-              <a href={content.materialUrl} target="_blank" rel="noreferrer">
-                Ver material atual
-              </a>
-            </div>
-          )}
-
           <input
+            key={editContentForm.fileInputKey || 0}
             type="file"
-            onChange={(e) =>
+            multiple
+            onChange={(e) => {
+              const selectedFiles = Array.from(e.target.files || []);
+              const currentFiles = editContentForm.files || [];
               setEditContentForm({
                 ...editContentForm,
-                file: e.target.files[0]
-              })
-            }
+                files: [...currentFiles, ...selectedFiles],
+                fileInputKey: (editContentForm.fileInputKey || 0) + 1
+              });
+            }}
           />
+
+          {(existingMaterials.length > 0 ||
+            (editContentForm.files || []).length > 0) && (
+            <div className="editor-material-chips">
+              {existingMaterials.map((mat) => (
+                <div key={mat._id} className="editor-material-chip">
+                  <a
+                    href={mat.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="editor-material-chip-title"
+                    title={mat.name || "Material"}
+                  >
+                    {mat.name || "Material"}
+                  </a>
+
+                  <button
+                    type="button"
+                    className="editor-material-chip-remove"
+                    onClick={() =>
+                      removeContentMaterial(section, content, mat._id)
+                    }
+                    title="Excluir material"
+                    aria-label={`Excluir ${mat.name || "material"}`}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+
+              {(editContentForm.files || []).map((file, idx) => (
+                <div
+                  key={`new-${file.name}-${idx}`}
+                  className="editor-material-chip"
+                >
+                  <span
+                    className="editor-material-chip-title"
+                    title={file.name}
+                  >
+                    {file.name}
+                  </span>
+
+                  <button
+                    type="button"
+                    className="editor-material-chip-remove"
+                    onClick={() =>
+                      setEditContentForm({
+                        ...editContentForm,
+                        files: editContentForm.files.filter(
+                          (_, i) => i !== idx
+                        )
+                      })
+                    }
+                    title="Remover arquivo"
+                    aria-label={`Remover ${file.name}`}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="editor-content-actions">
             <button
@@ -111,7 +185,7 @@ export default function ContentItem({
               {...attributes}
               {...listeners}
             >
-              <TbGridDots size = {15}/>
+              <TbGridDots size={15} />
             </button>
 
             <button

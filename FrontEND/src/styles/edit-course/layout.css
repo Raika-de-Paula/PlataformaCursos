@@ -1,0 +1,68 @@
+/* src/styles/edit-course/layout.css
+   Página, cabeçalho, grid principal e cartões */
+
+.edit-course-page {
+  min-height: auto;
+  padding: 42px 7%;
+  background: #f6f8fb;
+}
+
+.edit-course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.edit-course-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.8rem;
+}
+
+.edit-course-header p {
+  margin-top: 8px;
+  color: #64748b;
+}
+
+.edit-course-status {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.edit-course-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.45fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.editor-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  padding: 28px;
+}
+
+.editor-card h2 {
+  margin: 0 0 24px;
+  color: #0f172a;
+  font-size: 1.15rem;
+}
+
+.editor-empty-text {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1100px) {
+  .edit-course-grid {
+    grid-template-columns: 1fr;
+  }
+}

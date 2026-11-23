@@ -1,0 +1,153 @@
+/* src/styles/edit-course/sections.css
+   Lista de sessões (coluna da direita) */
+
+.course-sections-card {
+  min-height: 620px;
+}
+
+.editor-sections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editor-section-item {
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.editor-section-item.is-editing {
+  border-color: #93c5fd;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+}
+
+.editor-section-item.is-dragging {
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+  border-color: #0d4af2;
+}
+
+/* Cabeçalho da sessão (adaptativo ao tamanho do título) */
+.editor-section-header {
+  padding: 18px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.editor-section-header strong {
+  display: block;
+  color: #0f172a;
+  overflow-wrap: break-word;
+}
+
+.editor-section-header span {
+  display: block;
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.editor-section-header .drag-handle {
+  flex-shrink: 0;
+}
+
+.editor-section-header .editor-section-title {
+  flex: 1 1 150px;
+  min-width: 0;
+  text-align: center;
+}
+
+.editor-section-header .editor-section-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 1 auto;
+  margin-inline: auto;
+}
+
+/* Preview (modo expandido para leitura) */
+.editor-section-preview {
+  margin: 14px 16px 16px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.editor-preview-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editor-preview-list li {
+  font-size: 0.9rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.editor-preview-list li span {
+  color: #64748b;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* Corpo de edição da sessão e editar nome */
+.editor-section-edit-body {
+  width: 100%;
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.editor-inline-edit {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-inline: 16px;
+}
+
+.editor-inline-edit input {
+  flex: 1 1 180px;
+}
+
+.editor-inline-edit button {
+  flex: 1 1 auto;
+}
+
+/* Formulário de adicionar sessão */
+.editor-add-section-form {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 28px;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.editor-add-section-form h3 {
+  margin: 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.editor-add-section-form button {
+  width: 100%;
+  background: #f1f5f9;
+}

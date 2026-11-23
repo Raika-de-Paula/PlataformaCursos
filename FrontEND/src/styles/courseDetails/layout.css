@@ -4,9 +4,11 @@
 }
 
 .course-main {
+  width: 100%;
   max-width: 860px;
   margin: 24px auto 0;
   padding: 0 20px 50px;
+  box-sizing: border-box;
 }
 
 .course-info-card {

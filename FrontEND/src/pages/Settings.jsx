@@ -5,6 +5,7 @@ import api from "../services/api";
 import { AuthContext } from "../contexts/authContext";
 import AccountSecurityForms from "../components/settings/AccountSecurityForms";
 import DeleteAccountSection from "../components/settings/DeleteAccountSection";
+import BackButton from "../components/BackButton";
 import "../styles/Settings.css";
 
 export default function Settings() {
@@ -54,6 +55,8 @@ export default function Settings() {
 
   return (
     <main className="settings-page">
+      <BackButton />
+
       <h1>Configurações da Conta</h1>
 
       {feedback && (

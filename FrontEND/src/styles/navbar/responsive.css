@@ -1,0 +1,126 @@
+/* src/styles/navbar/responsive.css
+   Ajustes da barra em telas pequenas (precisa vir por último no índice) */
+
+/* 1º passo (<= 650px): botões "Meus Cursos" / "Criar curso"
+   viram quadrados só com o ícone, dando mais espaço para a busca */
+@media (max-width: 650px) {
+  .navbar {
+    padding: 0 20px;
+    gap: 14px;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    flex: initial;
+    flex-shrink: 0;
+  }
+
+  .navbar-center {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .action-icon-btn {
+    padding: 0;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .action-icon-btn .nav-btn-text {
+    display: none;
+  }
+}
+
+/* 2º passo (<= 450px): a barra de pesquisa vira apenas a lupa */
+@media (max-width: 450px) {
+  .navbar {
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .navbar-center {
+    flex: initial;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .search-container:not(.expanded) {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .search-container:not(.expanded):hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+  }
+
+  .search-container:not(.expanded) .navbar-search {
+    display: none;
+  }
+
+  .search-container:not(.expanded) .search-btn-icon {
+    position: static;
+    width: 100%;
+    height: 100%;
+    color: #0f172a;
+  }
+
+  /* Barra de pesquisa expandida ao clicar na lupa */
+  .navbar.search-active .navbar-right {
+    display: none;
+  }
+
+  .navbar.search-active .navbar-center {
+    flex: 1;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .search-container.expanded {
+    max-width: 100%;
+  }
+
+  .search-container.expanded .navbar-search {
+    display: block;
+    padding-right: 68px;
+  }
+
+  .search-container.expanded .search-close-btn {
+    display: flex;
+  }
+}
+
+/* 3º passo (<= 355px): o texto "Neadro" some e fica só o quadrado azul */
+@media (max-width: 355px) {
+  .navbar {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .navbar-right {
+    gap: 8px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .logo-icon,
+  .notification-btn,
+  .navbar-avatar {
+    flex-shrink: 0;
+  }
+}

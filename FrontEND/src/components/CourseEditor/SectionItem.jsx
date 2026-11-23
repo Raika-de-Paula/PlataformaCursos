@@ -34,6 +34,7 @@ export default function SectionItem({
   saveContentEdit,
   setEditingContentId,
   deleteContent,
+  removeContentMaterial,
   contentForms,
   handleContentChange,
   addContent,
@@ -98,7 +99,7 @@ export default function SectionItem({
             {...attributes}
             {...listeners}
           >
-            <TbGridDots size = {16}/>
+            <TbGridDots size={16} />
           </button>
 
           {isEditingSection ? (
@@ -217,6 +218,7 @@ export default function SectionItem({
                     saveContentEdit={saveContentEdit}
                     setEditingContentId={setEditingContentId}
                     deleteContent={deleteContent}
+                    removeContentMaterial={removeContentMaterial}
                   />
                 ))}
               </SortableContext>
@@ -247,11 +249,46 @@ export default function SectionItem({
             />
 
             <input
+              key={contentForms[section._id]?.fileInputKey || 0}
               type="file"
-              onChange={(e) =>
-                handleContentChange(section._id, "file", e.target.files[0])
-              }
+              multiple
+              onChange={(e) => {
+                const selectedFiles = Array.from(e.target.files || []);
+                const existingFiles = contentForms[section._id]?.files || [];
+                handleContentChange(section._id, "files", [
+                  ...existingFiles,
+                  ...selectedFiles
+                ]);
+                e.target.value = "";
+              }}
             />
+
+            {(contentForms[section._id]?.files || []).length > 0 && (
+              <div className="editor-material-chips">
+                {contentForms[section._id].files.map((file, idx) => (
+                  <div key={`${file.name}-${idx}`} className="editor-material-chip">
+                    <span className="editor-material-chip-title" title={file.name}>
+                      {file.name}
+                    </span>
+
+                    <button
+                      type="button"
+                      className="editor-material-chip-remove"
+                      onClick={() => {
+                        const updated = contentForms[section._id].files.filter(
+                          (_, i) => i !== idx
+                        );
+                        handleContentChange(section._id, "files", updated);
+                      }}
+                      title="Remover material"
+                      aria-label={`Remover ${file.name}`}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <button type="submit">+ Adicionar Conteúdo</button>
           </form>

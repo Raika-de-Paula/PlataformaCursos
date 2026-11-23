@@ -1,3 +1,6 @@
+// src/components/course/CourseSectionCard.jsx
+
+import { ChevronUp, ChevronDown } from "lucide-react";
 import CourseContentItem from "./CourseContentItem";
 
 export default function CourseSectionCard({
@@ -9,6 +12,7 @@ export default function CourseSectionCard({
   return (
     <div className="course-section-card">
       <button
+        type="button"
         className="section-header"
         onClick={() => toggleSection(section._id)}
       >
@@ -17,7 +21,15 @@ export default function CourseSectionCard({
           <span>{section.contents.length} itens</span>
         </div>
 
-        <span>{isOpen ? "⌃" : "⌄"}</span>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </span>
       </button>
 
       {isOpen && (
