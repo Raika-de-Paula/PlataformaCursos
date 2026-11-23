@@ -84,7 +84,7 @@ const updatePassword = async (req, res) => {
 
 const deleteMyAccount = async (req, res) => {
   try {
-    const { currentPassword, confirmation } = req.body;
+    const { currentPassword, confirmation, role } = req.body;
 
     if (confirmation !== "APAGAR CONTA") {
       return res.status(400).json({
@@ -107,34 +107,66 @@ const deleteMyAccount = async (req, res) => {
       return res.status(400).json({ message: "Senha atual incorreta" });
     }
 
-    // Bloqueia exclusão se houver cursos que ainda não foram finalizados
-    const unfinishedCoursesCount = await Course.countDocuments({
-      instructorId: req.user.id,
-      status: { $ne: "finished" }
-    });
+    // Define qual conta apagar (se não vier no body, usa a única role que o usuário tiver)
+    const targetRole =
+      role || (user.roles.length === 1 ? user.roles[0] : null);
 
-    if (unfinishedCoursesCount > 0) {
+    if (!targetRole || !user.roles.includes(targetRole)) {
       return res.status(400).json({
-        message:
-          "Você só pode apagar sua conta quando todos os seus cursos estiverem finalizados."
+        message: "Tipo de conta inválido ou não vinculado a este usuário."
       });
     }
 
-    // Mantém os cursos finalizados no ar, mas anonimiza o instrutor
-    await Course.updateMany(
-      { instructorId: req.user.id },
-      { $set: { instructorId: null } }
-    );
+    if (targetRole === "instructor") {
+      // Bloqueia exclusão se houver cursos que ainda não foram finalizados
+      const unfinishedCoursesCount = await Course.countDocuments({
+        instructorId: req.user.id,
+        status: { $ne: "finished" }
+      });
 
-    // Remove os perfis públicos e matrículas do usuário apagado
-    await InstructorProfile.deleteOne({ userId: req.user.id });
-    await StudentProfile.deleteOne({ userId: req.user.id });
-    await Enrollment.deleteMany({ studentId: req.user.id });
+      if (unfinishedCoursesCount > 0) {
+        return res.status(400).json({
+          message:
+            "Você só pode apagar sua conta de instrutor quando todos os seus cursos estiverem finalizados."
+        });
+      }
 
-    await User.findByIdAndDelete(req.user.id);
+      // Mantém os cursos finalizados no ar, mas anonimiza o instrutor
+      await Course.updateMany(
+        { instructorId: req.user.id },
+        { $set: { instructorId: null } }
+      );
+
+      await InstructorProfile.deleteOne({ userId: req.user.id });
+    }
+
+    if (targetRole === "student") {
+      await StudentProfile.deleteOne({ userId: req.user.id });
+      await Enrollment.deleteMany({ studentId: req.user.id });
+    }
+
+    // Remove apenas o papel apagado da lista de roles do usuário
+    const remainingRoles = user.roles.filter((r) => r !== targetRole);
+
+    if (remainingRoles.length === 0) {
+      // Se não sobrou nenhum outro perfil, apaga o registro principal do usuário
+      await User.findByIdAndDelete(req.user.id);
+      return res.json({
+        message: "Conta apagada com sucesso",
+        accountDeletedCompletely: true
+      });
+    }
+
+    // Se ainda possui o outro perfil (ex: era aluno e instrutor), mantém o usuário com a role restante
+    user.roles = remainingRoles;
+    await user.save();
 
     res.json({
-      message: "Conta apagada com sucesso"
+      message: `Conta de ${
+        targetRole === "instructor" ? "instrutor" : "aluno"
+      } apagada com sucesso`,
+      accountDeletedCompletely: false,
+      remainingRoles
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import api from "../services/api";
@@ -25,7 +25,7 @@ export default function Navbar() {
   const [timeoutId, setTimeoutId] = useState(null);
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [profilePhotoUrl, setProfilePhotoUrl] = useState("");
-
+  const profileMenuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,6 +34,24 @@ export default function Navbar() {
   const [isDark, setIsDark] = useState(() =>
     document.documentElement.classList.contains("dark")
   );
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
 
   // Sincroniza o estado do ícone caso o tema do sistema mude enquanto não há preferência manual salva
   useEffect(() => {
@@ -117,13 +135,20 @@ export default function Navbar() {
   };
 
   const openMenu = () => {
+    if (!window.matchMedia("(hover: hover)").matches) return;
     if (timeoutId) clearTimeout(timeoutId);
     setMenuOpen(true);
   };
 
   const closeMenu = () => {
+    if (!window.matchMedia("(hover: hover)").matches) return;
     const id = setTimeout(() => setMenuOpen(false), 100);
     setTimeoutId(id);
+  };
+
+  const toggleMenu = () => {
+    if (timeoutId) clearTimeout(timeoutId);
+    setMenuOpen((prev) => !prev);
   };
 
   return (
@@ -201,11 +226,15 @@ export default function Navbar() {
             </div>
 
             <div
+              ref={profileMenuRef}
               className="navbar-profile"
               onMouseEnter={openMenu}
               onMouseLeave={closeMenu}
             >
-              <div className="navbar-avatar">
+              <div
+                className="navbar-avatar"
+                onClick={toggleMenu}
+              >
                 {profilePhotoUrl ? (
                   <img
                     src={getImageUrl(profilePhotoUrl)}

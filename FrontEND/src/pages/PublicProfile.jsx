@@ -96,7 +96,7 @@ export default function PublicProfile() {
             </div>
 
             <p className="public-profile-role">
-              {isInstructor ? "Instrutor Verificado" : "Aluno"}
+              {isInstructor ? "Instrutor" : "Aluno"}
             </p>
 
             {profile.contacts?.links?.length > 0 && (

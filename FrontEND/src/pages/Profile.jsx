@@ -6,6 +6,18 @@ import { AuthContext } from "../contexts/authContext";
 import ProfileForm from "../components/ProfileEditor/ProfileForm";
 import "../styles/Profile.css";
 
+const formatPhone = (value) => {
+  if (!value) return "";
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 3) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 7) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 3)} ${digits.slice(3)}`;
+  }
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 3)} ${digits.slice(3, 7)}-${digits.slice(7)}`;
+};
+
 export default function Profile() {
   const { user, activeRole, updateUser } = useContext(AuthContext);
 
@@ -37,7 +49,9 @@ export default function Profile() {
 
         setForm({
           emails: data.contacts?.emails?.length ? data.contacts.emails : [""],
-          phones: data.contacts?.phones?.length ? data.contacts.phones : [""],
+          phones: data.contacts?.phones?.length
+            ? data.contacts.phones.map((phone) => formatPhone(phone))
+            : [""],
           links: data.contacts?.links?.length
             ? data.contacts.links
             : [{ label: "", url: "" }],
@@ -84,7 +98,7 @@ export default function Profile() {
 
   const handleArrayChange = (field, index, value) => {
     const updatedArray = [...form[field]];
-    updatedArray[index] = value;
+    updatedArray[index] = field === "phones" ? formatPhone(value) : value;
 
     setForm({
       ...form,
@@ -200,19 +214,19 @@ export default function Profile() {
 
   return (
     <ProfileForm
-        isInstructor={isInstructor}
-        profile={profile}
-        form={form}
-        photoPreview={photoPreview}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        handlePhotoChange={handlePhotoChange}
-        handleArrayChange={handleArrayChange}
-        addArrayItem={addArrayItem}
-        removeArrayItem={removeArrayItem}
-        handleLinkChange={handleLinkChange}
-        addLink={addLink}
-        removeLink={removeLink}
+      isInstructor={isInstructor}
+      profile={profile}
+      form={form}
+      photoPreview={photoPreview}
+      handleSubmit={handleSubmit}
+      handleChange={handleChange}
+      handlePhotoChange={handlePhotoChange}
+      handleArrayChange={handleArrayChange}
+      addArrayItem={addArrayItem}
+      removeArrayItem={removeArrayItem}
+      handleLinkChange={handleLinkChange}
+      addLink={addLink}
+      removeLink={removeLink}
     />
-    );
+  );
 }

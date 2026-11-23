@@ -86,7 +86,7 @@ export default function CourseSearch() {
 
               <div className="search-card-footer">
                 <span className={`search-status-badge ${course.status}`}>
-                  {course.status === "in_progress" && "Em Progresso"}
+                  {course.status === "in_progress" && "Em andamento"}
                   {course.status === "available" && "Disponível"}
                   {course.status === "finished" && "Concluído"}
                   {course.status !== "in_progress" && course.status !== "available" && course.status !== "finished" && course.status}

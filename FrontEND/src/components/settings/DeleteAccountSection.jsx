@@ -8,7 +8,11 @@ import { AuthContext } from "../../contexts/authContext";
 
 export default function DeleteAccountSection({ showFeedback }) {
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  const { user, activeRole, logout, updateUser, setActiveRole } =
+    useContext(AuthContext);
+
+  const isInstructor = activeRole === "instructor";
+  const roleLabel = isInstructor ? "instrutor" : "aluno";
 
   const [deleteForm, setDeleteForm] = useState({
     currentPassword: "",
@@ -40,13 +44,45 @@ export default function DeleteAccountSection({ showFeedback }) {
     setIsDeleting(true);
 
     try {
-      await api.delete("/users/me", {
-        data: deleteForm
+      const response = await api.delete("/users/me", {
+        data: {
+          ...deleteForm,
+          role: activeRole
+        }
       });
 
       setConfirmModalOpen(false);
-      logout();
-      navigate("/register");
+
+      if (response.data.accountDeletedCompletely) {
+        logout();
+        navigate("/register");
+        return;
+      }
+
+      // O usuário ainda possui o outro perfil (aluno ou instrutor)
+      const remainingRoles = response.data.remainingRoles || [];
+      const nextRole = remainingRoles[0];
+
+      if (updateUser && user) {
+        updateUser({
+          ...user,
+          roles: remainingRoles
+        });
+      }
+
+      if (nextRole && setActiveRole) {
+        const storage = sessionStorage.getItem("token")
+          ? sessionStorage
+          : localStorage;
+        storage.setItem("activeRole", nextRole);
+        setActiveRole(nextRole);
+      }
+
+      alert(
+        response.data.message ||
+          `Conta de ${roleLabel} apagada com sucesso!`
+      );
+      navigate("/");
     } catch (error) {
       setConfirmModalOpen(false);
       showFeedback(
@@ -61,12 +97,14 @@ export default function DeleteAccountSection({ showFeedback }) {
   return (
     <>
       <section className="settings-card settings-danger-card">
-        <h2>Apagar Conta</h2>
+        <h2>Apagar Conta de {isInstructor ? "Instrutor" : "Aluno"}</h2>
 
         <p>
-          Esta ação é permanente e todos os seus dados pessoais serão excluídos.
-          Se você for instrutor, todos os seus cursos precisam estar
-          finalizados (eles permanecerão na plataforma com autor anônimo).
+          Esta ação é permanente e todos os dados vinculados ao seu perfil de{" "}
+          <strong>{roleLabel}</strong> serão excluídos.{" "}
+          {isInstructor
+            ? "Todos os seus cursos precisam estar finalizados (eles permanecerão na plataforma com autor anônimo)."
+            : "Todas as suas matrículas e progresso nos cursos serão removidos."}
         </p>
 
         <form onSubmit={handleOpenConfirmModal}>
@@ -96,7 +134,9 @@ export default function DeleteAccountSection({ showFeedback }) {
             }
           />
 
-          <button type="submit">Apagar minha conta definitivamente</button>
+          <button type="submit">
+            Apagar minha conta de {roleLabel} definitivamente
+          </button>
         </form>
       </section>
 
@@ -125,9 +165,10 @@ export default function DeleteAccountSection({ showFeedback }) {
 
             <h3>Tem certeza absoluta?</h3>
             <p>
-              Você está prestes a excluir permanentemente sua conta da{" "}
-              <strong>Neadro</strong>. Essa ação não pode ser desfeita e você
-              perderá o acesso ao seu perfil e matrículas.
+              Você está prestes a excluir permanentemente sua conta de{" "}
+              <strong>{roleLabel}</strong> da <strong>Neadro</strong>. Essa
+              ação não pode ser desfeita e você perderá o acesso ao seu perfil
+              {isInstructor ? " de instrutor." : " e matrículas."}
             </p>
 
             <div className="settings-modal-actions">
@@ -146,7 +187,9 @@ export default function DeleteAccountSection({ showFeedback }) {
                 onClick={confirmDeleteAccount}
                 disabled={isDeleting}
               >
-                {isDeleting ? "Apagando..." : "Sim, apagar minha conta"}
+                {isDeleting
+                  ? "Apagando..."
+                  : `Sim, apagar conta de ${roleLabel}`}
               </button>
             </div>
           </div>
