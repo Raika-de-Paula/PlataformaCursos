@@ -1,6 +1,6 @@
 // src/pages/EditCourse.jsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import CourseForm from "../components/CourseEditor/CourseForm";
 import SectionItem from "../components/CourseEditor/SectionItem";
@@ -18,6 +18,7 @@ import {
 
 export default function EditCourse() {
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   const [course, setCourse] = useState(null);
   const [editingContentId, setEditingContentId] = useState(null);
@@ -25,7 +26,7 @@ export default function EditCourse() {
 
   const [editSectionForm, setEditSectionForm] = useState({ title: "" });
   const [editContentForm, setEditContentForm] = useState({ title: "", description: "", file: null });
-  const [courseForm, setCourseForm] = useState({ title: "", description: "", category: "", status: "in_progress", thumbnail: null});
+  const [courseForm, setCourseForm] = useState({ title: "", description: "", category: "", status: "in_progress", thumbnail: null });
   const [sectionForm, setSectionForm] = useState({ title: "", order: 1 });
   const [contentForms, setContentForms] = useState({});
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
@@ -57,6 +58,12 @@ export default function EditCourse() {
 
     fetchCourse();
   }, [courseId]);
+
+  useEffect(() => {
+    if (course?.title) {
+      document.title = `Editar: ${course.title} - Neadro`;
+    }
+  }, [course]);
 
   const handleCourseChange = (e) => {
     setCourseForm({ ...courseForm, [e.target.name]: e.target.value });
@@ -335,6 +342,21 @@ export default function EditCourse() {
     }
   };
 
+  const handleDeleteCourse = async () => {
+    const confirmado = window.confirm(
+      "Tem certeza que deseja excluir este curso permanentemente? Esta ação não pode ser desfeita."
+    );
+    if (!confirmado) return;
+
+    try {
+      await api.delete(`/courses/${courseId}`);
+      alert("Curso excluído com sucesso!");
+      navigate("/instructor/courses");
+    } catch (error) {
+      alert(error.response?.data?.message || "Erro ao excluir curso");
+    }
+  };
+
   return (
     <div className="edit-course-page">
       <div className="edit-course-header">
@@ -343,9 +365,27 @@ export default function EditCourse() {
           <p>Gerencie os detalhes, a capa, as sessões e os conteúdos do seu curso.</p>
         </div>
 
-        <span className={`edit-course-status ${course.status}`}>
-          {course.status === "in_progress" ? "Em andamento" : "Finalizado"}
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <span className={`edit-course-status ${course.status}`}>
+            {course.status === "in_progress" ? "Em andamento" : "Finalizado"}
+          </span>
+
+          <button
+            type="button"
+            onClick={handleDeleteCourse}
+            style={{
+              backgroundColor: "#ef4444",
+              color: "#ffffff",
+              border: "none",
+              padding: "8px 14px",
+              borderRadius: "8px",
+              fontWeight: "600",
+              cursor: "pointer"
+            }}
+          >
+            Excluir Curso
+          </button>
+        </div>
       </div>
 
       <div className="edit-course-grid">
@@ -366,49 +406,49 @@ export default function EditCourse() {
           )}
 
           <div className="editor-sections-list">
-          <DndContext
-            collisionDetection={closestCenter}
-            onDragEnd={handleSectionDragEnd}
-          >
-            <SortableContext
-              items={course.sections
-                ?.slice()
-                .sort((a, b) => a.order - b.order)
-                .map((section) => section._id)}
-              strategy={verticalListSortingStrategy}
+            <DndContext
+              collisionDetection={closestCenter}
+              onDragEnd={handleSectionDragEnd}
             >
-              {course.sections
-                ?.slice()
-                .sort((a, b) => a.order - b.order)
-                .map((section, index) => (
-                  <SectionItem
-                    key={section._id}
-                    section={section}
-                    index={index}
-                    totalSections={course.sections.length}
-                    editingSectionId={editingSectionId}
-                    editSectionForm={editSectionForm}
-                    setEditSectionForm={setEditSectionForm}
-                    startEditSection={startEditSection}
-                    saveSectionEdit={saveSectionEdit}
-                    setEditingSectionId={setEditingSectionId}
-                    deleteSection={deleteSection}
-                    editingContentId={editingContentId}
-                    editContentForm={editContentForm}
-                    setEditContentForm={setEditContentForm}
-                    startEditContent={startEditContent}
-                    saveContentEdit={saveContentEdit}
-                    setEditingContentId={setEditingContentId}
-                    deleteContent={deleteContent}
-                    contentForms={contentForms}
-                    handleContentChange={handleContentChange}
-                    addContent={addContent}
-                    handleContentDragEnd={handleContentDragEnd}
-                  />
-                ))}
-            </SortableContext>
-          </DndContext>
-        </div>
+              <SortableContext
+                items={course.sections
+                  ?.slice()
+                  .sort((a, b) => a.order - b.order)
+                  .map((section) => section._id)}
+                strategy={verticalListSortingStrategy}
+              >
+                {course.sections
+                  ?.slice()
+                  .sort((a, b) => a.order - b.order)
+                  .map((section, index) => (
+                    <SectionItem
+                      key={section._id}
+                      section={section}
+                      index={index}
+                      totalSections={course.sections.length}
+                      editingSectionId={editingSectionId}
+                      editSectionForm={editSectionForm}
+                      setEditSectionForm={setEditSectionForm}
+                      startEditSection={startEditSection}
+                      saveSectionEdit={saveSectionEdit}
+                      setEditingSectionId={setEditingSectionId}
+                      deleteSection={deleteSection}
+                      editingContentId={editingContentId}
+                      editContentForm={editContentForm}
+                      setEditContentForm={setEditContentForm}
+                      startEditContent={startEditContent}
+                      saveContentEdit={saveContentEdit}
+                      setEditingContentId={setEditingContentId}
+                      deleteContent={deleteContent}
+                      contentForms={contentForms}
+                      handleContentChange={handleContentChange}
+                      addContent={addContent}
+                      handleContentDragEnd={handleContentDragEnd}
+                    />
+                  ))}
+              </SortableContext>
+            </DndContext>
+          </div>
 
           <form className="editor-add-section-form" onSubmit={addSection}>
             <h3>Adicionar Sessão</h3>

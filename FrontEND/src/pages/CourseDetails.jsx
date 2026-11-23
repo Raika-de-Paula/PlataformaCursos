@@ -1,6 +1,6 @@
 // src/pages/CourseDetails.jsx
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import "../styles/CourseDetails.css";
@@ -9,15 +9,20 @@ import CourseHero from "../components/course/CourseHero";
 import CourseInfoCard from "../components/course/CourseInfoCard";
 import CourseSectionCard from "../components/course/CourseSectionCard";
 import CourseContentModal from "../components/course/CourseContentModal";
+import ConfirmModal from "../components/ConfirmModal";
+import { AuthContext} from "../contexts/authContext";
 
 export default function CourseDetails() {
   const { courseId } = useParams();
+  const { activeRole } = useContext(AuthContext);
+  const isStudent = activeRole === "student";
 
   const [course, setCourse] = useState(null);
   const [openSections, setOpenSections] = useState({});
   const [selectedContent, setSelectedContent] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const targetContentId = searchParams.get("contentId");
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -85,6 +90,21 @@ export default function CourseDetails() {
     }
   };
 
+  const handleConfirmLeave = async () => {
+    setShowLeaveModal(false);
+
+    try {
+      await api.delete(`/courses/${courseId}/enroll`);
+
+      const response = await api.get(`/courses/${courseId}`);
+      setCourse(response.data);
+
+      alert("Você saiu do curso com sucesso!");
+    } catch (error) {
+      alert(error.response?.data?.message || "Erro ao sair do curso");
+    }
+  };
+
   const toggleSection = (sectionId) => {
     setOpenSections({
       ...openSections,
@@ -124,6 +144,26 @@ export default function CourseDetails() {
                   setSelectedContent={handleCloseOrSelectContent}
                 />
               ))}
+
+            {isStudent && (
+              <div style={{ marginTop: "24px", textAlign: "right" }}>
+                <button
+                  type="button"
+                  onClick={() => setShowLeaveModal(true)}
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "#ef4444",
+                    border: "1px solid #ef4444",
+                    padding: "8px 16px",
+                    borderRadius: "8px",
+                    fontWeight: "600",
+                    cursor: "pointer"
+                  }}
+                >
+                  Sair do curso
+                </button>
+              </div>
+            )}
           </section>
         )}
       </main>
@@ -132,6 +172,16 @@ export default function CourseDetails() {
         selectedContent={selectedContent}
         setSelectedContent={handleCloseOrSelectContent}
         courseId={courseId}
+      />
+
+      <ConfirmModal
+        isOpen={showLeaveModal}
+        title="Sair do curso"
+        message={`Tem certeza que deseja cancelar sua matrícula em "${course.title}"? Você perderá o acesso às aulas até se matricular novamente.`}
+        confirmText="Sim, sair do curso"
+        cancelText="Cancelar"
+        onConfirm={handleConfirmLeave}
+        onCancel={() => setShowLeaveModal(false)}
       />
     </div>
   );

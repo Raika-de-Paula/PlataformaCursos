@@ -1,3 +1,5 @@
+// src/routes/enrollmentRoutes.js
+
 const express = require("express");
 const router = express.Router();
 
@@ -6,6 +8,7 @@ const roleMiddleware = require("../middlewares/roleMiddleware");
 
 const {
   enrollInCourse,
+  unenrollCourse,
   getMyEnrollments
 } = require("../controllers/enrollmentController");
 
@@ -14,6 +17,13 @@ router.post(
   authMiddleware,
   roleMiddleware("student"),
   enrollInCourse
+);
+
+router.delete(
+  "/courses/:courseId/enroll",
+  authMiddleware,
+  roleMiddleware("student"),
+  unenrollCourse
 );
 
 router.get(

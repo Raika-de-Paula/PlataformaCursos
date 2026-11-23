@@ -1,4 +1,4 @@
-//src/controllers/enrollmentController.js
+// src/controllers/enrollmentController.js
 
 const Enrollment = require("../models/Enrollment");
 const Course = require("../models/Course");
@@ -53,6 +53,41 @@ const enrollInCourse = async (req, res) => {
   }
 };
 
+const unenrollCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const studentId = req.user.id;
+
+    const deleted = await Enrollment.findOneAndDelete({
+      studentId,
+      courseId
+    });
+
+    if (!deleted) {
+      return res.status(404).json({
+        message: "Matrícula não encontrada."
+      });
+    }
+
+    await StudentProfile.findOneAndUpdate(
+      { userId: studentId },
+      {
+        $pull: {
+          enrolledCourses: courseId
+        }
+      }
+    );
+
+    res.json({
+      message: "Matrícula cancelada com sucesso!"
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};
+
 const getMyEnrollments = async (req, res) => {
   try {
     const enrollments = await Enrollment.find({
@@ -76,5 +111,6 @@ const getMyEnrollments = async (req, res) => {
 
 module.exports = {
   enrollInCourse,
+  unenrollCourse,
   getMyEnrollments
 };

@@ -1,4 +1,4 @@
-//src/routes/courseRoutes.js
+// src/routes/courseRoutes.js
 
 const express = require("express");
 const router = express.Router();
@@ -39,6 +39,7 @@ router.post(
   validateMiddleware,
   createCourse
 );
+
 router.get("/", getCourses);
 
 router.get(
