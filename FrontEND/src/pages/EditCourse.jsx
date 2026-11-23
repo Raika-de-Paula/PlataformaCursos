@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import CourseForm from "../components/CourseEditor/CourseForm";
 import SectionItem from "../components/CourseEditor/SectionItem";
+import ConfirmModal from "../components/ConfirmModal";
 import "../styles/EditCourse.css";
 import {
   DndContext,
@@ -23,6 +24,7 @@ export default function EditCourse() {
   const [course, setCourse] = useState(null);
   const [editingContentId, setEditingContentId] = useState(null);
   const [editingSectionId, setEditingSectionId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [editSectionForm, setEditSectionForm] = useState({ title: "" });
   const [editContentForm, setEditContentForm] = useState({ title: "", description: "", file: null });
@@ -342,11 +344,8 @@ export default function EditCourse() {
     }
   };
 
-  const handleDeleteCourse = async () => {
-    const confirmado = window.confirm(
-      "Tem certeza que deseja excluir este curso permanentemente? Esta ação não pode ser desfeita."
-    );
-    if (!confirmado) return;
+  const handleConfirmDelete = async () => {
+    setShowDeleteModal(false);
 
     try {
       await api.delete(`/courses/${courseId}`);
@@ -372,7 +371,7 @@ export default function EditCourse() {
 
           <button
             type="button"
-            onClick={handleDeleteCourse}
+            onClick={() => setShowDeleteModal(true)}
             style={{
               backgroundColor: "#ef4444",
               color: "#ffffff",
@@ -464,6 +463,16 @@ export default function EditCourse() {
           </form>
         </section>
       </div>
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Excluir curso"
+        message={`Tem certeza que deseja excluir o curso "${course.title}" permanentemente? Todas as sessões e materiais serão apagados e esta ação não poderá ser desfeita.`}
+        confirmText="Sim, excluir curso"
+        cancelText="Cancelar"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </div>
   );
 }
