@@ -1,4 +1,6 @@
-//src/components/comments/CommentAvatar.jsx
+// src/components/comments/CommentAvatar.jsx
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function CommentAvatar({ user, className = "comment-avatar" }) {
   const getInitials = (name) => {
@@ -12,18 +14,17 @@ export default function CommentAvatar({ user, className = "comment-avatar" }) {
       .toUpperCase();
   };
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
   const getImageUrl = (url) => {
     if (!url) return "";
-    return url.startsWith("http") ? url : `${API_URL}/${url}`;
+    if (url.startsWith("http")) return url;
+    return `${API_URL}${url.startsWith("/") ? "" : "/"}${url}`;
   };
 
   return (
     <div className={className}>
       {user?.photoUrl ? (
         <img
-          src={getAvatarUrl(user.photoUrl)}
+          src={getImageUrl(user.photoUrl)}
           alt={user?.name || "Usuário"}
         />
       ) : (

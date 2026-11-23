@@ -1,3 +1,5 @@
+//src/components/course/CourseContentModal.jsx
+
 import Comments from "../Comments";
 import { useEffect } from "react";
 import {
